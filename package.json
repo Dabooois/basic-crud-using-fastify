@@ -1,28 +1,28 @@
 {
-  "name": "basic-crud",
-  "version": "1.0.0",
-  "description": "",
-  "main": "src/index.js",
-  "scripts": {
-    "build": "tsc -w",
-    "dev": "nodemon build/index.js",
-    "start": "node build/index.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@fastify/formbody": "^7.4.0",
-    "@prisma/client": "^4.13.0",
-    "fastify": "^4.15.0",
-    "fastify-plugin": "^4.5.0",
-    "graphql": "^16.6.0",
-    "mercurius": "^12.2.0",
-    "nodemon": "^2.0.22",
-    "prisma": "^4.13.0"
-  },
-  "devDependencies": {
-    "@types/node": "^18.16.0",
-    "typescript": "^5.0.4"
-  }
+    "name": "basic-crud",
+    "version": "1.0.0",
+    "description": "",
+    "main": "src/index.js",
+    "scripts": {
+        "build": "tsc -w",
+        "dev": "nodemon build/index.js",
+        "start": "node build/index.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@fastify/formbody": "^7.4.0",
+        "@prisma/client": "^4.13.0",
+        "fastify": "^4.15.0",
+        "fastify-plugin": "^4.5.0",
+        "graphql": "^16.6.0",
+        "mercurius": "^12.2.0",
+        "nodemon": "^2.0.22",
+        "prisma": "^4.13.0"
+    },
+    "devDependencies": {
+        "@types/node": "^18.16.0",
+        "typescript": "^5.0.4"
+    }
 }
