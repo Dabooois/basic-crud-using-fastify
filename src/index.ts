@@ -1,5 +1,5 @@
 import fastify from 'fastify';
-import postRoute from './route/post';
+import postRoute from './routes/posts';
 
 const server = fastify().register(require('@fastify/formbody'));
 

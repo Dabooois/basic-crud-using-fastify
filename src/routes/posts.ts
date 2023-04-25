@@ -1,4 +1,4 @@
-import { IPost, IPostId } from '../type/post';
+import { IPost, IPostId } from '../types/posts';
 import { PrismaClient } from '@prisma/client';
 import { FastifyInstance } from 'fastify';
 const client = new PrismaClient();
