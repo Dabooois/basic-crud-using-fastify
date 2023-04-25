@@ -1,7 +1,6 @@
 import fastify from 'fastify';
-import postRoute from './route/post';
+import postRoute from './routes/posts';
 import mercurius from 'mercurius';
-
 const server = fastify().register(require('@fastify/formbody'));
 
 server.register(postRoute);
