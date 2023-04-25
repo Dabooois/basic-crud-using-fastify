@@ -4,18 +4,21 @@ import url from 'url';
 import { buildSchema, graphql } from 'graphql';
 var schema = buildSchema(`
   type Query {
-    hello: String
+    hello(name: String!): String
     hi: String!
   }
 `);
 
 // The rootValue provides a resolver function for each API endpoint
 var rootValue = {
-    hello: () => {
-        return 'Hello World!';
-    },
-    hi: () => {
-        return `here I am `;
+    Query: {
+        hello: (_, params) => {
+            const { name } = params;
+            return `Hello World! ${name}`;
+        },
+        hi: () => {
+            return `here I am `;
+        },
     },
 };
 
@@ -32,7 +35,7 @@ http.createServer(async (req, res) => {
         req.on('data', async function (data) {
             console.log('data---------------', data.toString());
             const source = JSON.parse(data.toString()).query;
-
+            console.log(source);
             await graphql({
                 schema,
                 source: source,
