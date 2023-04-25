@@ -55,36 +55,47 @@ const postRoute = async (fastify: FastifyInstance, _options: Object) => {
         const { title, body, isPublished } = request.body;
         const convertToBoolean = isPublished === 'false' ? false : true;
 
-        await client.post.update({
-          where: {
-            id: Number(id),
-          },
-          data: {
-            title,
-            body,
-            isPublished: convertToBoolean,
-          },
-        });
+        try {
+          await client.post.update({
+            where: {
+              id: Number(id),
+            },
+            data: {
+              title,
+              body,
+              isPublished: convertToBoolean,
+            },
+          });
 
-        reply.status(200).send({
-          message: 'Post Successfully updated',
-        });
+          reply.status(200).send({
+            message: 'Post Successfully updated',
+          });
+        } catch (error) {
+          reply.status(400).send({
+            message: 'Error in updating post',
+          });
+        }
       }
     ),
     fastify.delete<{ Params: IPostId }>(
       '/posts/:id',
       async (request, reply) => {
         const { id } = request.params;
+        try {
+          await client.post.delete({
+            where: {
+              id: Number(id),
+            },
+          });
 
-        await client.post.delete({
-          where: {
-            id: Number(id),
-          },
-        });
-
-        reply.status(200).send({
-          message: 'Post successfully deleted',
-        });
+          reply.status(200).send({
+            message: 'Post successfully deleted',
+          });
+        } catch (error) {
+          reply.status(400).send({
+            message: 'Error in deleting post',
+          });
+        }
       }
     );
 };
