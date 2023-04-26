@@ -1,26 +1,36 @@
 import http from 'http';
 import url from 'url';
+import rootValue from './resolvers/posts';
 
 import { buildSchema, graphql } from 'graphql';
-var schema = buildSchema(`
+const schema = buildSchema(`
+  
   type Query {
-    hello(name: String!): String
-    hi: String!
+    getPosts: [Post]!
+    getPost(id: ID!): Post 
+  }
+
+  type Mutation {
+    createPost(data:CreatePostInput!): String!
+    updatePost(data: CreatePostInput ): String!
+    deletePost(id:ID!): String!
+  }
+
+  type Post {
+    id: ID!
+    title: String!
+    body: String!
+    isPublished: Boolean!
+    createdAt: String!
+  }
+
+  input CreatePostInput {
+    id: ID
+    title: String!
+    body: String!
+    isPublished: Boolean!
   }
 `);
-
-// The rootValue provides a resolver function for each API endpoint
-var rootValue = {
-    Query: {
-        hello: (_, params) => {
-            const { name } = params;
-            return `Hello World! ${name}`;
-        },
-        hi: () => {
-            return `here I am `;
-        },
-    },
-};
 
 http.createServer(async (req, res) => {
     res.writeHead(200, {
@@ -33,16 +43,18 @@ http.createServer(async (req, res) => {
 
     if (req.method === 'POST') {
         req.on('data', async function (data) {
-            console.log('data---------------', data.toString());
             const source = JSON.parse(data.toString()).query;
-            console.log(source);
+            const variable = JSON.parse(data.toString()).variables;
+
             await graphql({
                 schema,
                 source: source,
                 rootValue,
+                variableValues: variable,
             }).then((response) => {
                 res.write(JSON.stringify(response));
             });
+
             res.end();
         });
     } else if (req.method === 'GET') {
